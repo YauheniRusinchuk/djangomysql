@@ -1,0 +1,75 @@
+{% extends 'main/base.html' %}
+{% block title %}Фильмы - Кинообзоры{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2 mb-0">Фильмы</h1>
+    {% if user.is_authenticated %}
+    <a href="{% url 'main:add_movie' %}" class="btn btn-primary">
+      <i class="fas fa-plus me-2"></i>Добавить фильм
+    </a>
+    {% endif %}
+  </div>
+
+  {% if not movies %}
+  <div class="text-center py-5">
+    <div class="empty-state mb-4">
+      <i class="fas fa-film fa-4x text-muted mb-3"></i>
+      <h3 class="h4 mb-3">Фильмы отсутствуют</h3>
+      {% if not user.is_authenticated %}
+      <p class="text-muted mb-4">Чтобы добавить фильм, войдите в систему</p>
+      <a href="{% url 'main:login' %}" class="btn btn-primary px-4">
+        <i class="fas fa-sign-in-alt me-2"></i>Войти
+      </a>
+      {% else %}
+      <p class="text-muted mb-4">Добавьте первый фильм в коллекцию!</p>
+      <a href="{% url 'main:add_movie' %}" class="btn btn-primary px-4">
+        <i class="fas fa-plus me-2"></i>Добавить фильм
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  {% else %}
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for movie in movies %}
+    <div class="col">
+      <div class="card h-100 movie-card">
+        {% if movie.poster %}
+        <img src="{{ movie.poster }}" class="card-img-top movie-poster" alt="{{ movie.title }}">
+        {% else %}
+        <div class="card-img-top movie-poster bg-light d-flex align-items-center justify-content-center">
+          <i class="fas fa-image fa-3x text-muted"></i>
+        </div>
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="card-title mb-0">{{ movie.title }}</h5>
+            <span class="badge bg-primary">
+              <i class="fas fa-star me-1"></i>{{ movie.average_rating|floatformat:1 }}
+            </span>
+          </div>
+          {% if movie.user %}
+          <div class="mb-2">
+            <span class="badge bg-secondary">
+              <i class="fas fa-user me-1"></i>{{ movie.user.username }}
+            </span>
+          </div>
+          {% endif %}
+          <p class="card-text text-muted flex-grow-1">{{ movie.description|truncatewords:30 }}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <span class="text-muted">
+              <i class="far fa-calendar-alt me-1"></i>{{ movie.release_date|date:"Y" }}
+            </span>
+            <a href="{% url 'main:movie_detail' movie.id %}" class="btn btn-outline-primary">
+              <i class="fas fa-info-circle me-1"></i>Подробнее
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

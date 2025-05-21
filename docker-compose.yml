@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: >
+      sh -c "
+        echo 'Waiting for database...' &&
+        while ! nc -z db 3306; do
+          sleep 1
+        done &&
+        echo 'Database is ready!' &&
+        python manage.py makemigrations main &&
+        until python manage.py migrate; do
+          echo 'Migration failed, retrying in 3s...'
+          sleep 3
+        done &&
+        python manage.py runserver 0.0.0.0:8000
+      "
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - MYSQL_DATABASE=django_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_HOST=db
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=django_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data: 

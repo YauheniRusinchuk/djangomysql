@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Django
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# Environments
+.env
+venv/
+ENV/
+.env.*
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Docker
+*.pid
+docker-compose.override.yml
+*.dbdata/
+
+# MySQL Docker volume
+mysql_data/
+
+# Other
+*.bak
+*.swp
+*.swo
+
+# Node
+node_modules/
+
+# Coverage
+htmlcov/
+.coverage
+.tox/
+.coverage.*
+.cache
+
+# Migrations (optional, if you want to keep them out)
+# main/migrations/*.pyc
+# main/migrations/__pycache__/ 

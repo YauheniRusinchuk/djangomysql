@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Главная - Кинообзоры{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Фильмы</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for movie in movies %}
+        <div class="col">
+            <div class="card h-100 movie-card">
+                <img src="{{ movie.poster }}" class="card-img-top movie-poster" alt="{{ movie.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text text-muted">Год выпуска: {{ movie.release_date.year }}</p>
+                    <p class="card-text">Рейтинг: {{ movie.average_rating|floatformat:1 }}/10</p>
+                    <a href="{% url 'main:movie_detail' movie.id %}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">Фильмы не найдены</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
