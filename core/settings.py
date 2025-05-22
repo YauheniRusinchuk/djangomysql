@@ -41,6 +41,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Добавить эту строку
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -63,7 +65,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# Database
 DATABASES = {
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL'),
@@ -72,6 +73,11 @@ DATABASES = {
     )
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    f'https://{os.getenv("RAILWAY_PUBLIC_DOMAIN")}'
+]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     # ваши текущие валидаторы
@@ -86,7 +92,6 @@ USE_TZ = True
 # Static files (with WhiteNoise)
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 STATICFILES_DIRS = [
