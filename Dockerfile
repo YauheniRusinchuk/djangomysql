@@ -29,8 +29,8 @@ EXPOSE 8000
 # RUN python manage.py migrate
 
 RUN python3 -m pip install --upgrade pip
-RUN sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-RUN sudo chmod +x /usr/local/bin/docker-compose
+RUN curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+RUN chmod +x ~/docker-compose
 
 # Run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
