@@ -88,52 +88,56 @@
       }
 
       .btn {
-        border-radius: 14px;
-        padding: 0.6rem 1.7rem;
+        border-radius: 16px;
+        padding: 0.7rem 2rem;
         font-weight: 600;
-        font-size: 1.08rem;
+        font-size: 1.1rem;
         letter-spacing: 0.01em;
-        transition: all 0.18s cubic-bezier(.4,2,.3,1);
-        box-shadow: 0 2px 8px rgba(90,124,255,0.07);
-        border: none;
+        transition: 
+          background 0.18s cubic-bezier(.4,2,.3,1),
+          color 0.18s cubic-bezier(.4,2,.3,1),
+          box-shadow 0.18s cubic-bezier(.4,2,.3,1),
+          transform 0.12s cubic-bezier(.4,2,.3,1);
+        box-shadow: 0 2px 12px rgba(106,133,241,0.08);
         outline: none;
+        border: none;
       }
       .btn-primary {
-        background: linear-gradient(90deg, #7eaaff 0%, #b6c6f5 100%);
+        background: linear-gradient(90deg, #6a85f1 0%, #aee2ff 100%);
         color: #fff;
-        border: none;
-        box-shadow: 0 4px 16px rgba(90,124,255,0.10);
+        box-shadow: 0 4px 24px rgba(106,133,241,0.13);
       }
       .btn-primary:hover, .btn-primary:focus {
-        background: linear-gradient(90deg, #5a7cff 0%, #7eaaff 100%);
+        background: linear-gradient(90deg, #4f6ed6 0%, #6a85f1 100%);
         color: #fff;
-        transform: translateY(-2px) scale(1.04);
-        box-shadow: 0 8px 24px rgba(90,124,255,0.13);
+        box-shadow: 0 8px 32px 0 rgba(106,133,241,0.18), 0 0 0 4px #aee2ff33;
+        transform: scale(1.04);
       }
       .btn-primary:active {
-        background: linear-gradient(90deg, #5a7cff 0%, #b6c6f5 100%);
+        background: linear-gradient(90deg, #4f6ed6 0%, #aee2ff 100%);
         color: #fff;
-        box-shadow: 0 2px 8px rgba(90,124,255,0.10);
-        transform: scale(0.98);
+        box-shadow: 0 2px 8px rgba(106,133,241,0.10);
+        transform: scale(0.97);
       }
       .btn-outline-primary {
-        border: 2px solid #b6c6f5;
-        color: #5a7cff;
-        background: #f8faff;
-        box-shadow: 0 2px 8px rgba(90,124,255,0.04);
+        border: 2px solid #6a85f1;
+        color: #4f6ed6;
+        background: transparent;
+        box-shadow: 0 2px 8px rgba(106,133,241,0.04);
       }
       .btn-outline-primary:hover, .btn-outline-primary:focus {
-        background: linear-gradient(90deg, #e0e7ff 0%, #b6c6f5 100%);
-        color: #2c3e50;
-        border-color: #7eaaff;
-        box-shadow: 0 4px 16px rgba(90,124,255,0.10);
+        background: #eaf1ff;
+        color: #4f6ed6;
+        border-color: #4f6ed6;
+        box-shadow: 0 4px 16px rgba(106,133,241,0.10), 0 0 0 4px #aee2ff33;
+        transform: scale(1.04);
       }
       .btn-outline-primary:active {
-        background: #e0e7ff;
-        color: #2c3e50;
-        border-color: #b6c6f5;
-        box-shadow: 0 2px 8px rgba(90,124,255,0.07);
-        transform: scale(0.98);
+        background: #e0eaff;
+        color: #4f6ed6;
+        border-color: #6a85f1;
+        box-shadow: 0 2px 8px rgba(106,133,241,0.07);
+        transform: scale(0.97);
       }
 
       .footer {
@@ -226,16 +230,16 @@
               </a>
             </li>
           </ul>
-          <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav ms-auto align-items-center" style="gap: 0.5rem;">
             {% if user.is_authenticated %}
-            <li class="nav-item d-flex align-items-center">
-              <a class="nav-link d-flex align-items-center" href="{% url 'main:profile' %}">
+            <li class="nav-item d-flex align-items-center" style="gap: 0.5rem;">
+              <a class="nav-link d-flex align-items-center p-0" href="{% url 'main:profile' %}" style="gap: 0.5rem; background: none;">
                 <img src="https://ui-avatars.com/api/?name={{ user.username|urlencode }}&background=4f8cff&color=fff&size=32" class="user-avatar" alt="avatar">
-                <span>{{ user.username }}</span>
+                <span style="font-size: 1.08rem; font-weight: 600; color: #2c3e50;">{{ user.username }}</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'main:logout' %}">
+            <li class="nav-item d-flex align-items-center">
+              <a class="nav-link d-flex align-items-center" href="{% url 'main:logout' %}">
                 <i class="fas fa-sign-out-alt me-1"></i>Выйти
               </a>
             </li>
