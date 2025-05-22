@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
   gcc \
   python3-dev \
   default-libmysqlclient-dev \
+  pkg-config \
+  libssl-dev \
   && rm -rf /var/lib/apt/lists/*
 
 # Копирование и установка Python-зависимостей
