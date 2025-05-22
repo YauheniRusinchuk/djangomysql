@@ -11,12 +11,13 @@
       :root {
         --primary-color: #2c3e50;
         --secondary-color: #34495e;
-        --accent-color: #4f8cff;
-        --accent-gradient: linear-gradient(135deg, #4f8cff 0%, #6a82fb 100%);
+        --accent-color: #5a7cff;
+        --accent-gradient: linear-gradient(135deg, #e0e7ff 0%, #b6c6f5 100%);
+        --accent-gradient-btn: linear-gradient(135deg, #5a7cff 0%, #7eaaff 100%);
         --text-color: #2c3e50;
-        --light-bg: #f8f9fa;
-        --card-shadow: 0 8px 24px rgba(80, 120, 200, 0.10);
-        --card-hover-shadow: 0 16px 32px rgba(80, 120, 200, 0.18);
+        --light-bg: #f6f8fb;
+        --card-shadow: 0 8px 24px rgba(80, 120, 200, 0.08);
+        --card-hover-shadow: 0 16px 32px rgba(80, 120, 200, 0.13);
       }
 
       body {
@@ -31,7 +32,7 @@
 
       .navbar {
         background: var(--accent-gradient) !important;
-        box-shadow: 0 2px 8px rgba(80,120,200,0.08);
+        box-shadow: 0 2px 8px rgba(80,120,200,0.06);
         border-radius: 0 0 18px 18px;
       }
 
@@ -106,18 +107,18 @@
         padding: 0.5rem 1.5rem;
         font-weight: 500;
         transition: all 0.2s cubic-bezier(.4,2,.3,1);
-        box-shadow: 0 2px 8px rgba(80,120,200,0.08);
+        box-shadow: 0 2px 8px rgba(80,120,200,0.06);
       }
       .btn-primary {
-        background: var(--accent-gradient);
+        background: var(--accent-gradient-btn);
         border: none;
         color: #fff;
       }
       .btn-primary:hover, .btn-primary:focus {
-        background: #4f8cff;
+        background: #5a7cff;
         color: #fff;
         transform: translateY(-2px) scale(1.04);
-        box-shadow: 0 4px 16px rgba(80,120,200,0.18);
+        box-shadow: 0 4px 16px rgba(80,120,200,0.13);
       }
       .btn-outline-primary {
         border: 2px solid var(--accent-color);
@@ -125,7 +126,7 @@
         background: #fff;
       }
       .btn-outline-primary:hover {
-        background: var(--accent-gradient);
+        background: var(--accent-gradient-btn);
         color: #fff;
         border: none;
       }
@@ -150,7 +151,7 @@
         transition: all 0.3s;
       }
       .social-share a:hover {
-        color: #ffe082;
+        color: #b6c6f5;
         transform: translateY(-3px) scale(1.2);
       }
       .card .social-share a {
@@ -183,9 +184,10 @@
         border: 1.5px solid #dee2e6;
         transition: all 0.3s;
         font-size: 1.08rem;
+        background: #f8faff;
       }
       .form-control:focus {
-        box-shadow: 0 0 0 0.2rem rgba(79, 140, 255, 0.18);
+        box-shadow: 0 0 0 0.2rem rgba(90, 124, 255, 0.13);
         border-color: var(--accent-color);
       }
 
@@ -280,7 +282,7 @@
           </a>
         </div>
         <div class="footer-text">
-          <p>&copy; 2024 Кинообзоры. Все права защищены.</p>
+          <p>&copy; 2025 Кинообзоры. Все права защищены.</p>
         </div>
       </div>
     </footer>

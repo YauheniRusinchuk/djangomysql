@@ -4,12 +4,15 @@
 {% block content %}
 <div class="container py-4">
   <h2 class="mb-4">Профиль пользователя</h2>
-  <form method="post" class="mb-5">
+  <form method="post" class="mb-4" style="max-width: 500px;">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    <div class="d-flex flex-column flex-md-row gap-2">
+      <button type="submit" class="btn btn-primary flex-fill">Сохранить изменения</button>
+      <a href="{% url 'password_change' %}" class="btn btn-outline-primary flex-fill">Сменить пароль</a>
+    </div>
   </form>
-  <h3>Ваши фильмы</h3>
+  <h3 class="mt-5 mb-3">Вы добавили следующие фильмы:</h3>
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     {% for movie in movies %}
       <div class="col">
