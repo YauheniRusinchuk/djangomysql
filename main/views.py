@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import DatabaseError
 from django.db.utils import ProgrammingError
+from django.core.paginator import Paginator
 from .models import Movie, Comment, Rating, create_mock_movies
 from .forms import UserRegistrationForm, UserLoginForm, CommentForm, RatingForm, MovieForm, FeedbackForm
 
@@ -50,7 +51,17 @@ def movie_list(request):
         movies = Movie.objects.all()
         if search_query:
             movies = movies.filter(title__icontains=search_query)
-        return render(request, 'main/movie_list.html', {'movies': movies})
+
+        # Добавляем пагинацию
+        paginator = Paginator(movies, 9)  # 9 фильмов на страницу
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, 'main/movie_list.html', {
+            'movies': page_obj,
+            'page_obj': page_obj,
+            'search_query': search_query
+        })
     except ProgrammingError:
         # Таблицы не созданы (нет миграций)
         return render(request, 'main/movie_list.html', {
@@ -193,3 +204,18 @@ def feedback_view(request):
     else:
         form = FeedbackForm()
     return render(request, 'main/feedback.html', {'form': form})
+
+
+@login_required
+def delete_movie(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    if movie.user != request.user:
+        messages.error(request, 'Вы не являетесь автором этого фильма!')
+        return redirect('main:movie_detail', movie_id=movie.id)
+
+    if request.method == 'POST':
+        movie.delete()
+        messages.success(request, 'Фильм успешно удалён!')
+        return redirect('main:movie_list')
+
+    return render(request, 'main/delete_movie.html', {'movie': movie})
