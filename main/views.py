@@ -6,7 +6,7 @@ from django.db import DatabaseError
 from django.db.utils import ProgrammingError
 from django.core.paginator import Paginator
 from .models import Movie, Comment, Rating, create_mock_movies
-from .forms import UserRegistrationForm, UserLoginForm, CommentForm, RatingForm, MovieForm, FeedbackForm
+from .forms import UserRegistrationForm, UserLoginForm, CommentForm, RatingForm, MovieForm, FeedbackForm, UserEditForm
 
 
 # view для обработки запросов на регистрацию и авторизацию и вывод списка фильмов
@@ -219,3 +219,17 @@ def delete_movie(request, movie_id):
         return redirect('main:movie_list')
 
     return render(request, 'main/delete_movie.html', {'movie': movie})
+
+
+@login_required
+def profile_view(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Профиль успешно обновлён!')
+    else:
+        form = UserEditForm(instance=user)
+    movies = user.movie_set.all()
+    return render(request, 'main/profile.html', {'form': form, 'movies': movies})

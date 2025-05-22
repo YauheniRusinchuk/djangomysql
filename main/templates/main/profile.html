@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Профиль пользователя</h2>
+  <form method="post" class="mb-5">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+  </form>
+  <h3>Ваши фильмы</h3>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for movie in movies %}
+      <div class="col">
+        <div class="card h-100">
+          {% if movie.poster %}
+            <img src="{{ movie.poster }}" class="card-img-top movie-poster" alt="{{ movie.title }}">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <p class="card-text">{{ movie.description|truncatewords:20 }}</p>
+            <a href="{% url 'main:movie_detail' movie.id %}" class="btn btn-outline-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>Вы ещё не добавили ни одного фильма.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %} 

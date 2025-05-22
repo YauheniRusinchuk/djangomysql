@@ -11,37 +11,57 @@
       :root {
         --primary-color: #2c3e50;
         --secondary-color: #34495e;
-        --accent-color: #3498db;
+        --accent-color: #4f8cff;
+        --accent-gradient: linear-gradient(135deg, #4f8cff 0%, #6a82fb 100%);
         --text-color: #2c3e50;
         --light-bg: #f8f9fa;
+        --card-shadow: 0 8px 24px rgba(80, 120, 200, 0.10);
+        --card-hover-shadow: 0 16px 32px rgba(80, 120, 200, 0.18);
       }
 
       body {
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        background-color: var(--light-bg);
+        background: var(--light-bg);
         color: var(--text-color);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        letter-spacing: 0.01em;
       }
 
       .navbar {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        background: var(--accent-gradient) !important;
+        box-shadow: 0 2px 8px rgba(80,120,200,0.08);
+        border-radius: 0 0 18px 18px;
       }
 
       .navbar-brand {
-        font-weight: 600;
-        font-size: 1.5rem;
+        font-weight: 700;
+        font-size: 1.7rem;
+        letter-spacing: 0.03em;
       }
 
       .nav-link {
         font-weight: 500;
-        transition: color 0.3s ease;
+        transition: color 0.3s, background 0.3s, box-shadow 0.3s;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+      }
+      .nav-link:hover, .nav-link.active {
+        color: #fff !important;
+        background: var(--accent-color);
+        box-shadow: 0 2px 8px rgba(80,120,200,0.10);
       }
 
-      .nav-link:hover {
-        color: var(--accent-color) !important;
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 0.5rem;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 8px rgba(80,120,200,0.10);
+        background: #e3e8f0;
       }
 
       .content {
@@ -51,51 +71,71 @@
 
       .card {
         border: none;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 18px;
+        box-shadow: var(--card-shadow);
+        transition: transform 0.3s cubic-bezier(.4,2,.3,1), box-shadow 0.3s;
+        background: #fff;
+        overflow: hidden;
+        animation: fadeInUp 0.7s cubic-bezier(.4,2,.3,1);
       }
-
       .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: var(--card-hover-shadow);
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .movie-card {
-        transition: transform 0.3s ease;
+        transition: transform 0.3s cubic-bezier(.4,2,.3,1);
       }
-
       .movie-card:hover {
-        transform: scale(1.02);
+        transform: scale(1.04) translateY(-4px);
       }
 
       .movie-poster {
-        height: 300px;
+        height: 260px;
         object-fit: cover;
-        border-radius: 8px 8px 0 0;
+        border-radius: 18px 18px 0 0;
+        box-shadow: 0 2px 8px rgba(80,120,200,0.10);
       }
 
       .btn {
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 0.5rem 1.5rem;
         font-weight: 500;
-        transition: all 0.3s ease;
+        transition: all 0.2s cubic-bezier(.4,2,.3,1);
+        box-shadow: 0 2px 8px rgba(80,120,200,0.08);
       }
-
       .btn-primary {
-        background: linear-gradient(135deg, var(--accent-color), #2980b9);
+        background: var(--accent-gradient);
+        border: none;
+        color: #fff;
+      }
+      .btn-primary:hover, .btn-primary:focus {
+        background: #4f8cff;
+        color: #fff;
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 4px 16px rgba(80,120,200,0.18);
+      }
+      .btn-outline-primary {
+        border: 2px solid var(--accent-color);
+        color: var(--accent-color);
+        background: #fff;
+      }
+      .btn-outline-primary:hover {
+        background: var(--accent-gradient);
+        color: #fff;
         border: none;
       }
 
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      }
-
       .footer {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        background: var(--accent-gradient);
         color: white;
         padding: 2rem 0;
         margin-top: 3rem;
+        border-radius: 18px 18px 0 0;
       }
 
       .social-share {
@@ -104,19 +144,15 @@
         justify-content: center;
         margin-bottom: 1.5rem;
       }
-
       .social-share a {
         color: white;
         font-size: 1.5rem;
-        transition: all 0.3s ease;
+        transition: all 0.3s;
       }
-
       .social-share a:hover {
-        color: var(--accent-color);
-        transform: translateY(-3px);
+        color: #ffe082;
+        transform: translateY(-3px) scale(1.2);
       }
-
-      /* Исправление: делаем иконки темными внутри карточек */
       .card .social-share a {
         color: var(--primary-color);
         background: none;
@@ -131,9 +167,9 @@
       }
 
       .alert {
-        border-radius: 8px;
+        border-radius: 10px;
         border: none;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(80,120,200,0.10);
       }
 
       .auth-form {
@@ -142,21 +178,22 @@
       }
 
       .form-control {
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 0.75rem 1rem;
-        border: 1px solid #dee2e6;
-        transition: all 0.3s ease;
+        border: 1.5px solid #dee2e6;
+        transition: all 0.3s;
+        font-size: 1.08rem;
       }
-
       .form-control:focus {
-        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        box-shadow: 0 0 0 0.2rem rgba(79, 140, 255, 0.18);
         border-color: var(--accent-color);
       }
 
       .badge {
         padding: 0.5rem 1rem;
-        border-radius: 6px;
+        border-radius: 8px;
         font-weight: 500;
+        font-size: 1rem;
       }
     </style>
   </head>
@@ -182,12 +219,13 @@
               </a>
             </li>
           </ul>
-          <ul class="navbar-nav">
+          <ul class="navbar-nav ms-auto">
             {% if user.is_authenticated %}
-            <li class="nav-item">
-              <span class="nav-link">
-                <i class="fas fa-user me-1"></i>{{ user.username }}
-              </span>
+            <li class="nav-item d-flex align-items-center">
+              <a class="nav-link d-flex align-items-center" href="{% url 'main:profile' %}">
+                <img src="https://ui-avatars.com/api/?name={{ user.username|urlencode }}&background=4f8cff&color=fff&size=32" class="user-avatar" alt="avatar">
+                <span>{{ user.username }}</span>
+              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'main:logout' %}">
