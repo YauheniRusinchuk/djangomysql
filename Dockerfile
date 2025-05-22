@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Установка системных зависимостей
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
   default-libmysqlclient-dev \
   build-essential \
@@ -12,18 +12,27 @@ RUN apt-get update && apt-get install -y \
   netcat-traditional \
   && rm -rf /var/lib/apt/lists/*
 
-# Установка зависимостей Python
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Копирование проекта
+# Copy project
 COPY . .
 
-# Создание директории для медиафайлов
+# Create media directory
 RUN mkdir -p media
 
-# Открытие порта
+# Expose port
 EXPOSE 8000
 
-# Запуск приложения
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# # Run migrations
+# RUN python manage.py migrate
+
+RUN python3 -m pip install --upgrade pip
+RUN apt-get update && apt-get install -y curl
+RUN curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
+  && chmod +x /usr/local/bin/docker-compose
+RUN chmod +x ~/docker-compose
+
+# Run the application
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
