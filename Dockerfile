@@ -25,8 +25,8 @@ RUN mkdir -p media
 # Expose port
 EXPOSE 8000
 
-# Run migrations
-RUN python manage.py migrate
+# # Run migrations
+# RUN python manage.py migrate
 
 # Run the application
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
