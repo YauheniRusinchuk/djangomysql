@@ -31,38 +31,23 @@
       }
 
       .navbar {
-        background: var(--accent-gradient) !important;
+        background: linear-gradient(90deg, #e3eafc 0%, #f8fbff 100%) !important;
         box-shadow: 0 2px 8px rgba(80,120,200,0.06);
         border-radius: 0 0 18px 18px;
+        backdrop-filter: blur(8px);
+        background-color: rgba(227,234,252,0.85) !important;
       }
-
-      .navbar-brand {
-        font-weight: 700;
-        font-size: 1.7rem;
-        letter-spacing: 0.03em;
-      }
-
-      .nav-link {
-        font-weight: 500;
-        transition: color 0.3s, background 0.3s, box-shadow 0.3s;
-        border-radius: 8px;
-        padding: 0.5rem 1rem;
+      .navbar-brand, .nav-link, .nav-link i {
+        color: #2c3e50 !important;
+        text-shadow: none;
       }
       .nav-link:hover, .nav-link.active {
         color: #fff !important;
-        background: var(--accent-color);
+        background: #5a7cff;
         box-shadow: 0 2px 8px rgba(80,120,200,0.10);
       }
-
       .user-avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 0.5rem;
-        border: 2px solid #fff;
-        box-shadow: 0 2px 8px rgba(80,120,200,0.10);
-        background: #e3e8f0;
+        border: 2px solid #5a7cff;
       }
 
       .content {

@@ -48,7 +48,7 @@ def user_logout(request):
 def movie_list(request):
     try:
         search_query = request.GET.get('search', '')
-        movies = Movie.objects.all()
+        movies = Movie.objects.all().order_by('-created_at')
         if search_query:
             movies = movies.filter(title__icontains=search_query)
 
