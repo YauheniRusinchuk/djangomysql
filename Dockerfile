@@ -3,6 +3,7 @@ FROM python:3.11-slim as builder
 
 WORKDIR /app
 
+# Установка системных зависимостей для сборки
 RUN apt-get update && apt-get install -y \
   gcc \
   python3-dev \
@@ -11,6 +12,7 @@ RUN apt-get update && apt-get install -y \
   libssl-dev \
   && rm -rf /var/lib/apt/lists/*
 
+# Установка Python-зависимостей
 COPY requirements.txt .
 RUN pip install --user --no-cache-dir -r requirements.txt
 
@@ -19,7 +21,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Runtime зависимости и настройка прав
+# Установка runtime зависимостей и настройка прав
 RUN apt-get update && apt-get install -y \
   libmariadb3 \
   netcat-traditional \
@@ -29,11 +31,12 @@ RUN apt-get update && apt-get install -y \
 
 # Создание пользователя и владение файлами
 RUN useradd --create-home appuser \
-  && chown -R appuser:appuser /app
+  && chown -R appuser:appuser /app \
+  && chmod -R 755 /app/staticfiles
 
 USER appuser
 
-# Копирование зависимостей
+# Копирование зависимостей из builder
 COPY --from=builder --chown=appuser:appuser /root/.local /home/appuser/.local
 
 # Копирование проекта
@@ -44,9 +47,8 @@ ENV PATH="/home/appuser/.local/bin:${PATH}" \
   PYTHONUNBUFFERED=1 \
   PYTHONPATH="/app"
 
-# Сборка статики с проверкой
-RUN python manage.py collectstatic --noinput --clear || \
-  (echo "Warning: Collectstatic failed! Check staticfiles configuration."; exit 0)
+# Сборка статики с подробным выводом
+RUN python manage.py collectstatic --noinput --clear -v 3
 
 EXPOSE 8000
 
