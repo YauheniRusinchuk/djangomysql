@@ -5,7 +5,7 @@ Django settings for core project.
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import dj_database_url
+import dj_database_url  # type: ignore
 
 load_dotenv()
 
