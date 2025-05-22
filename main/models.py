@@ -13,6 +13,8 @@ class Movie(models.Model):
     description = models.TextField()
     release_date = models.DateField(default=datetime.date(2000, 1, 1))
     poster = models.TextField()
+    video_url = models.URLField(
+        blank=True, null=True, help_text='URL видео (YouTube, Vimeo и т.д.)')
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Добавил')
     created_at = models.DateTimeField(auto_now_add=True)

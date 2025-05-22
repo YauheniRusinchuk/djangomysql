@@ -106,24 +106,28 @@ class RatingForm(forms.ModelForm):
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = ['title', 'description', 'release_date', 'poster']
+        fields = ['title', 'description',
+                  'release_date', 'poster', 'video_url']
         labels = {
             'title': 'Название фильма',
             'description': 'Описание',
             'release_date': 'Дата выхода',
             'poster': 'URL постера',
+            'video_url': 'URL видео',
         }
         help_texts = {
             'title': 'Введите название фильма',
             'description': 'Краткое описание фильма',
             'release_date': 'Укажите дату выхода фильма',
             'poster': 'Вставьте ссылку на постер (картинку)',
+            'video_url': 'Вставьте ссылку на видео (YouTube, Vimeo и т.д.)',
         }
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название фильма'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Описание'}),
             'release_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': 'дд.мм.гггг'}),
             'poster': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'URL постера'}),
+            'video_url': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'URL видео'}),
         }
 
 
