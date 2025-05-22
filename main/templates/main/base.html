@@ -88,32 +88,52 @@
       }
 
       .btn {
-        border-radius: 10px;
-        padding: 0.5rem 1.5rem;
-        font-weight: 500;
-        transition: all 0.2s cubic-bezier(.4,2,.3,1);
-        box-shadow: 0 2px 8px rgba(80,120,200,0.06);
+        border-radius: 14px;
+        padding: 0.6rem 1.7rem;
+        font-weight: 600;
+        font-size: 1.08rem;
+        letter-spacing: 0.01em;
+        transition: all 0.18s cubic-bezier(.4,2,.3,1);
+        box-shadow: 0 2px 8px rgba(90,124,255,0.07);
+        border: none;
+        outline: none;
       }
       .btn-primary {
-        background: var(--accent-gradient-btn);
-        border: none;
+        background: linear-gradient(90deg, #7eaaff 0%, #b6c6f5 100%);
         color: #fff;
+        border: none;
+        box-shadow: 0 4px 16px rgba(90,124,255,0.10);
       }
       .btn-primary:hover, .btn-primary:focus {
-        background: #5a7cff;
+        background: linear-gradient(90deg, #5a7cff 0%, #7eaaff 100%);
         color: #fff;
         transform: translateY(-2px) scale(1.04);
-        box-shadow: 0 4px 16px rgba(80,120,200,0.13);
+        box-shadow: 0 8px 24px rgba(90,124,255,0.13);
+      }
+      .btn-primary:active {
+        background: linear-gradient(90deg, #5a7cff 0%, #b6c6f5 100%);
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(90,124,255,0.10);
+        transform: scale(0.98);
       }
       .btn-outline-primary {
-        border: 2px solid var(--accent-color);
-        color: var(--accent-color);
-        background: #fff;
+        border: 2px solid #b6c6f5;
+        color: #5a7cff;
+        background: #f8faff;
+        box-shadow: 0 2px 8px rgba(90,124,255,0.04);
       }
-      .btn-outline-primary:hover {
-        background: var(--accent-gradient-btn);
-        color: #fff;
-        border: none;
+      .btn-outline-primary:hover, .btn-outline-primary:focus {
+        background: linear-gradient(90deg, #e0e7ff 0%, #b6c6f5 100%);
+        color: #2c3e50;
+        border-color: #7eaaff;
+        box-shadow: 0 4px 16px rgba(90,124,255,0.10);
+      }
+      .btn-outline-primary:active {
+        background: #e0e7ff;
+        color: #2c3e50;
+        border-color: #b6c6f5;
+        box-shadow: 0 2px 8px rgba(90,124,255,0.07);
+        transform: scale(0.98);
       }
 
       .footer {
