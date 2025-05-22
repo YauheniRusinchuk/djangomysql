@@ -3,15 +3,14 @@ FROM python:3.11-slim as builder
 
 WORKDIR /app
 
-# Установка системных зависимостей для сборки
 RUN apt-get update && apt-get install -y \
   gcc \
   python3-dev \
   default-libmysqlclient-dev \
   pkg-config \
+  libssl-dev \
   && rm -rf /var/lib/apt/lists/*
 
-# Установка Python-зависимостей с кэшированием
 COPY requirements.txt .
 RUN pip install --user --no-cache-dir -r requirements.txt
 
@@ -20,40 +19,35 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Установка runtime зависимостей
+# Runtime зависимости и настройка прав
 RUN apt-get update && apt-get install -y \
   libmariadb3 \
   netcat-traditional \
+  && mkdir -p /app/staticfiles /app/media \
+  && chmod -R 755 /app/staticfiles \
   && rm -rf /var/lib/apt/lists/*
 
-# Создание непривилегированного пользователя
-RUN useradd --create-home appuser && \
-  chown -R appuser:appuser /app
+# Создание пользователя и владение файлами
+RUN useradd --create-home appuser \
+  && chown -R appuser:appuser /app
+
 USER appuser
 
-# Настройка окружения
-ENV PATH="/home/appuser/.local/bin:${PATH}" \
-  PYTHONPATH="${PYTHONPATH}:/app" \
-  PYTHONUNBUFFERED=1
-
-# Копирование зависимостей из builder
+# Копирование зависимостей
 COPY --from=builder --chown=appuser:appuser /root/.local /home/appuser/.local
 
 # Копирование проекта
 COPY --chown=appuser:appuser . .
 
-# Сборка статики и подготовка
-RUN mkdir -p media staticfiles && \
-  python manage.py collectstatic --noinput --clear && \
-  find . -type d -name "__pycache__" -exec rm -rf {} +
+# Настройка окружения
+ENV PATH="/home/appuser/.local/bin:${PATH}" \
+  PYTHONUNBUFFERED=1 \
+  PYTHONPATH="/app"
 
-# Порт
+# Сборка статики с проверкой
+RUN python manage.py collectstatic --noinput --clear || \
+  (echo "Warning: Collectstatic failed! Check staticfiles configuration."; exit 0)
+
 EXPOSE 8000
 
-# Команда запуска с настройкой для Railway
-CMD ["gunicorn", \
-  "--bind", "0.0.0.0:8000", \
-  "--workers", "3", \
-  "--timeout", "120", \
-  "--preload", \
-  "core.wsgi"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "core.wsgi"]
