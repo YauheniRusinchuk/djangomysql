@@ -5,8 +5,11 @@ from django.contrib import messages
 from django.db import DatabaseError
 from django.db.utils import ProgrammingError
 from django.core.paginator import Paginator
+from django.db.models import Count
 from .models import Movie, Comment, Rating, create_mock_movies
 from .forms import UserRegistrationForm, UserLoginForm, CommentForm, RatingForm, MovieForm, FeedbackForm, UserEditForm
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 # view для обработки запросов на регистрацию и авторизацию и вывод списка фильмов
@@ -48,7 +51,7 @@ def user_logout(request):
 def movie_list(request):
     try:
         search_query = request.GET.get('search', '')
-        movies = Movie.objects.all().order_by('-created_at')
+        movies = Movie.objects.all().annotate(num_comments=Count('comments'))
         if search_query:
             movies = movies.filter(title__icontains=search_query)
 
@@ -233,3 +236,19 @@ def profile_view(request):
         form = UserEditForm(instance=user)
     movies = user.movie_set.all()
     return render(request, 'main/profile.html', {'form': form, 'movies': movies})
+
+
+def movies_api(request):
+    search_query = request.GET.get('search', '')
+    page_number = request.GET.get('page', 1)
+    movies = Movie.objects.all().annotate(num_comments=Count('comments'))
+    if search_query:
+        movies = movies.filter(title__icontains=search_query)
+    paginator = Paginator(movies, 9)
+    page_obj = paginator.get_page(page_number)
+    html = render_to_string('main/_movie_cards.html', {'movies': page_obj})
+    return JsonResponse({
+        'html': html,
+        'has_next': page_obj.has_next(),
+        'next_page': page_obj.next_page_number() if page_obj.has_next() else None,
+    })
