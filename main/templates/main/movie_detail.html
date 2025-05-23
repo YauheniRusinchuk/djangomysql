@@ -1,4 +1,6 @@
 {% extends 'main/base.html' %}
+{% load youtube_filters %}
+
 {% block title %}{{ movie.title }} - Кинообзоры{% endblock %}
 
 {% block content %}
@@ -70,9 +72,14 @@
         <div class="card-body">
           <h4 class="card-title mb-3">Трейлер</h4>
           <div class="ratio ratio-16x9">
-            <iframe src="{{ movie.video_url|default:'' }}" 
-                    title="{{ movie.title }} - трейлер" 
-                    allowfullscreen></iframe>
+            <iframe 
+              src="{{ movie.video_url|default:''|youtube_embed_url }}" 
+              title="{{ movie.title }} - трейлер"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>
