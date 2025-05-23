@@ -98,7 +98,8 @@ class RatingForm(forms.ModelForm):
                 'class': 'form-control',
                 'min': '1',
                 'max': '10',
-                'step': '1'
+                'step': '1',
+                'placeholder': 'Введите оценку (1-10)'
             })
         }
 
